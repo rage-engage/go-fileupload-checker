@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"flag"
 	"fmt"
 	"log"
 	"net/http"
@@ -51,9 +52,15 @@ func uploadPath(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	port := ":8080"
+	defaultPort := 8080
 	router := mux.NewRouter().StrictSlash(true)
 	router.HandleFunc("/upload", uploadPath).Methods("PUT")
+
+	// Optional port flag
+	flagPort := flag.Int("p", defaultPort, "port number, default 8080")
+	flag.Parse()
+	port := fmt.Sprintf(":%v", *flagPort)
+
 	fmt.Println("Listening on: ", port)
 	log.Fatal(http.ListenAndServe(port, router))
 }
