@@ -15,7 +15,7 @@ You should see more information in CLI
 ![](./Screenshot%202020-05-30%20at%2015.37.27.png?raw=true)
 
 ### Install by downloading
-Please see the (Github releases page)[https://github.com/rage-engage/go-fileupload-checker/releases/] for the binaries. Currently this contains MacOS and Windows releases.  
+Please see the [Github releases page](https://github.com/rage-engage/go-fileupload-checker/releases/) for the binaries. Currently this contains MacOS and Windows releases.  
 To run the downloaded binary on MacOS navigate to the folder where the binary is and run the command   
 `./go-fileupload-checker`
 
