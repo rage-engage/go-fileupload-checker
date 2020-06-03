@@ -8,6 +8,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 )
 
 func uploadPath(w http.ResponseWriter, r *http.Request) {
@@ -53,6 +54,22 @@ func uploadPath(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	defaultPort := 8080
+
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"}, // All origins
+		AllowCredentials: true,
+		AllowedHeaders:   []string{"*"},
+		AllowedMethods: []string{
+			http.MethodGet, //http methods for your app
+			http.MethodPost,
+			http.MethodPut,
+			http.MethodPatch,
+			http.MethodDelete,
+			http.MethodOptions,
+			http.MethodHead,
+		},
+		// 	AllowedMethods: []string{"GET"}, // Allowing only get, just an example
+	})
 	router := mux.NewRouter().StrictSlash(true)
 	router.HandleFunc("/upload", uploadPath).Methods("PUT")
 
@@ -62,5 +79,5 @@ func main() {
 	port := fmt.Sprintf(":%v", *flagPort)
 
 	fmt.Println("Listening on: ", port)
-	log.Fatal(http.ListenAndServe(port, router))
+	log.Fatal(http.ListenAndServe(port, c.Handler(router)))
 }
